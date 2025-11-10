@@ -5,10 +5,10 @@
         private $conn;
         private $table_name = 'users';
 
-        private $id;
-        private $username;
-        private $password;
-        private $role;
+        public $id;
+        public $username;
+        public $password;
+        public $role;
 
         public function __construct($db)
         {
@@ -53,6 +53,18 @@
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":id", $id);
             return $stmt->execute();
+        }
+
+        public function login(){
+            $query = "SELECT users.*, roles.name as role FROM " . $this->table_name . " LEFT JOIN roles ON users.role_id = roles.id WHERE users.username = :username";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":username", $this->username);
+            $stmt->execute();
+            $user =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if($user && password_verify($this->password, $user['password'])){
+                return $user;
+            }
         }
     }
 ?>
