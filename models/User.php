@@ -17,9 +17,9 @@
 
         public function getAllUsers(){
             $query = "SELECT users.*, roles.name as role FROM " . $this->table_name . " LEFT JOIN roles ON users.role_id = roles.id";
-            $stnt = $this->conn->prepare($query);
-            $stnt->execute();
-            return $stnt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public function create($username, $password, $role_id){
@@ -29,6 +29,14 @@
             $stmt->bindParam(":password", password_hash($password, PASSWORD_BCRYPT));
             $stmt->bindParam(":role_id", $role_id);
             return $stmt->execute();
+        }
+
+        public function getUserById($id){
+            $query = "SELECT users.*, roles.name as role FROM " . $this->table_name . " LEFT JOIN roles ON users.role_id = roles.id WHERE users.id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         }
     }
 ?>

@@ -18,6 +18,12 @@
       $content = 'views/users/create.php';
       break;
 
+    case 'edit-user':
+      $title = 'Edit Pengguna';
+      $breadcrumb = ["Home" => "index.php", "Users" => "?page=users", "Edit Pengguna" => "" ];
+      $content = 'views/users/edit.php';
+      break;
+
     case 'products':
       $title = 'Data Produk';
       $breadcrumb = ["Home" => "index.php", "Produk" => "" ];
