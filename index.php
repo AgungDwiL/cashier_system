@@ -6,19 +6,23 @@
 
   switch($page){
     case 'users':
+      $title = 'Users';
       $content = 'views/users/list.php';
       break;
 
     case 'products':
+      $title = 'Products';
       $content = 'views/products/list.php';
       break;
 
     case 'roles':
+      $title = 'Roles';
       $content = 'views/roles.php';
       break;
     
     case 'dashboard':
     default:
+      $title = 'Dashboard';
       $content = 'views/dashboard.php';
       break;
   }
