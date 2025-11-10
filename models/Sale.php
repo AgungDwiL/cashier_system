@@ -12,7 +12,20 @@ class Sale{
     
     public function getAllSales(){
         $query = 'SELECT * FROM ' . $this->table_name;
-        $stmp = $this->conn->prepare($query);
-        return $stmp->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function create($invoice_number, $customer_name, $total_amount){
+        $query = 'INSERT INTO ' . $this->table_name . ' (invoice_number, customer_name, total_amount) VALUES (:invoice_number, :customer_name, :total_amount)';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':invoice_number', $invoice_number);
+        $stmt->bindParam(':customer_name', $customer_name);
+        $stmt->bindParam(':total_amount', $total_amount);
+        return $stmt->execute();
+    }
+
+    public function getLastInsertId(){
+        return $this->conn->lastInsertId();
     }
 }
