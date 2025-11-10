@@ -10,7 +10,7 @@ class Sale{
             $this->conn = $db;
         }
     
-    public function getSales(){
+    public function getAllSales(){
         $query = 'SELECT * FROM ' . $this->table_name;
         $stmp = $this->conn->prepare($query);
         return $stmp->fetchAll(PDO::FETCH_ASSOC);

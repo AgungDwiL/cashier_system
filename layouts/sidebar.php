@@ -41,6 +41,12 @@
         </a>
         </li>
         <li class="nav-item">
+        <a href="?page=sales" class="nav-link">
+            <i class="nav-icon bi bi-receipt"></i>
+            <p>Penjualan</p>
+        </a>
+        </li>
+        <li class="nav-item">
         <a href="?page=users" class="nav-link">
             <i class="nav-icon bi bi-people"></i>
             <p>Pengguna</p>
