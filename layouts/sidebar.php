@@ -96,3 +96,11 @@
   <div class="app-content">
     <!--begin::Container-->
     <div class="container-fluid">
+      <?php if (isset($_SESSION['success'])) {?>
+        <div class="alert alert-success" role="alert">
+          <?php echo $_SESSION['success']; ?>
+        </div>
+      <?php 
+        }
+        unset($_SESSION['success']);
+      ?>
