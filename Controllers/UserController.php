@@ -28,4 +28,10 @@
             header('Location: ../index.php?page-user');
         }
     }
+
+    if(isset($_GET['delete'])){
+        $user->delete($_GET['delete']);
+        $_SESSION['success'] = "Pengguna berhasil dihapus";
+        header('Location: ../index.php?page-user');
+    }
 ?>
