@@ -14,7 +14,7 @@
 
         if($user->create($username, $password, $role_id)){
             $_SESSION['success'] = 'Pengguna berhasil ditambahkan.';
-            header('Location: ../index.php?page-user');
+            header('Location: ../index.php?page=users');
         }
     }
 
@@ -25,13 +25,13 @@
 
         if($user->update($id, $username, $role_id)){
             $_SESSION['success'] = 'Pengguna berhasil diperbarui.';
-            header('Location: ../index.php?page-user');
+            header('Location: ../index.php?page=users');
         }
     }
 
     if(isset($_GET['delete'])){
         $user->delete($_GET['delete']);
         $_SESSION['success'] = "Pengguna berhasil dihapus";
-        header('Location: ../index.php?page-user');
+        header('Location: ../index.php?page=users');
     }
 ?>

@@ -35,7 +35,7 @@
                     <div class="mb-3 col-md-4">
                     <label for="price" class="form-label">Harga Produk</label>
                     <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         id="price"
                         aria-describedby="price" name="price" placeholder="Harga produk..." value="<?= $p['price'] ?>" />
@@ -43,7 +43,7 @@
                     <div class="mb-3 col-md-4">
                     <label for="stock" class="form-label">Stok Produk</label>
                     <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         id="stock"
                         aria-describedby="stock" name="stock" placeholder="Stok produk..." value="<?= $p['stock'] ?>" />

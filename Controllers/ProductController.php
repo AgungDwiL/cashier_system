@@ -14,7 +14,7 @@
 
         if($product->create()){
             $_SESSION['success'] = 'Produk berhasil ditambahkan.';
-            header('Location: ../index.php?page-product');
+            header('Location: ../index.php?page=products');
         }
     }
 
@@ -26,13 +26,13 @@
 
         if($product->update()){
             $_SESSION['success'] = 'Produk berhasil diperbarui.';
-            header('Location: ../index.php?page-product');
+            header('Location: ../index.php?page=products');
         }
     }
 
     if(isset($_GET['delete'])){
         $product->delete($_GET['delete']);
         $_SESSION['success'] = "Produk berhasil dihapus";
-        header('Location: ../index.php?page-product');
+        header('Location: ../index.php?page=products');
     }
 ?>
