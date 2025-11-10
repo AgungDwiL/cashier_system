@@ -1,4 +1,5 @@
-<?php 
+<?php
+    session_start();
     require_once __DIR__ . '/../config/Database.php';
     require_once __DIR__ . '/../models/Sale.php';
     require_once __DIR__ . '/../models/SaleDetail.php';

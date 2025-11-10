@@ -39,7 +39,7 @@
                             <td><?= $s['invoice_number'] ?></td>
                             <td><?= $s['customer_name'] ?></td>
                             <td><?= $s['total_amount'] ?></td>
-                            <td><?= $s['sale_date'] ?></td>
+                            <td><?= date("d M Y", strtotime($s['sales_date'])) ?></td>
                             <td>
                                 <a class="btn btn-info" href="?page=edit-sale&id=<?= $p['id'] ?>">Edit</a>
                                 <a class="btn btn-danger" href="controllers/SaleController.php?delete=<?= $p['id'] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus penjualan ini?')">Delete</a>
