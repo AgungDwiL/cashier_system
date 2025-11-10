@@ -40,7 +40,7 @@
                             <td><?= $p['stock'] ?></td>
                             <td>
                                 <a class="btn btn-info" href="?page=edit-product&id=<?= $p['id'] ?>">Edit</a>
-                                <a class="btn btn-danger" href="controllers/ProductController.php?delete=<?= $p['id'] ?>">Delete</a>
+                                <a class="btn btn-danger" href="controllers/ProductController.php?delete=<?= $p['id'] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus produk ini?')">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

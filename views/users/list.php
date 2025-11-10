@@ -38,7 +38,7 @@
                             <td><?= $u['role'] ?></td>
                             <td>
                                 <a class="btn btn-info" href="?page=edit-user&id=<?= $u['id'] ?>">Edit</a>
-                                <a class="btn btn-danger" href="controllers/UserController.php?delete=<?= $u['id'] ?>">Delete</a>
+                                <a class="btn btn-danger" href="controllers/UserController.php?delete=<?= $u['id'] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus pengguna ini?')">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
