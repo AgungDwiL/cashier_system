@@ -37,8 +37,8 @@
       break;
 
     case 'edit-product':
-      $title = 'Edit Product';
-      $breadcrumb = ["Home" => "index.php", "Produk" => "?page=products", "Edit Product" => "" ];
+      $title = 'Edit Produk';
+      $breadcrumb = ["Home" => "index.php", "Produk" => "?page=products", "Edit Produk" => "" ];
       $content = 'views/products/edit.php';
       break;
     
@@ -46,6 +46,18 @@
       $title = 'Data Penjualan';
       $breadcrumb = ["Home" => "index.php", "Penjualan" => "" ];
       $content = 'views/sales/list.php';
+      break;
+    
+    case 'create-sale':
+      $title = 'Tambah Penjualan';
+      $breadcrumb = ["Home" => "index.php", "Penjualan" => "?page=sales", "Tambah Penjualan" => "" ];
+      $content = 'views/sales/create.php';
+      break;
+
+    case 'edit-sale':
+      $title = 'Edit Penjualan';
+      $breadcrumb = ["Home" => "index.php", "Penjualan" => "?page=sales", "Edit Penjualan" => "" ];
+      $content = 'views/sales/edit.php';
       break;
 
     case 'roles':

@@ -25,7 +25,7 @@
                 <thead>
                 <tr>
                     <th style="width: 10px">No</th>
-                    <th>Nomor Struk</th>
+                    <th>Nomor Faktur</th>
                     <th>Nama Pembeli</th>
                     <th>Total Belanja</th>
                     <th>Tanggal Penjualan</th>
