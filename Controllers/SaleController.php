@@ -42,17 +42,15 @@
 
                     $p = $this->product->getProductById($product['product_id']);
                     
-                    $this->product->update(
-                        $p['product_id'],
-                        $p['name'],
-                        $p['price'],
-                        $p['stock'] - $product['quantity']
-                    );
-
-                    $this->redirectWithMessage("Penjualan berhasil ditambahkan.", "../index.php?page=sales" );
+                    $this->product->id = $p['id'];
+                    $this->product->name = $p['name'];
+                    $this->product->price = $p['price'];
+                    $this->product->stock = $p['stock'] - $product['quantity'];
+                    $this->product->update();
                 }
-                $this->redirectWithMessage("Penjualan gagal ditambahkan.", "../index.php?page=sales" );
+                $this->redirectWithMessage("Penjualan berhasil ditambahkan.", "../index.php?page=sales" );
             }
+            $this->redirectWithMessage("Penjualan gagal ditambahkan.", "../index.php?page=sales" );
         }
     }
 
