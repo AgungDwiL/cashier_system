@@ -27,6 +27,7 @@
             <!--begin::Body-->
             <div class="card-body">
                 <div class="row">
+                    <input type="hidden" value="<?= $u['id']?>" name="id">
                     <div class="mb-3 col-md-6">
                     <label for="username" class="form-label">Username</label>
                     <input

@@ -17,4 +17,15 @@
             header('Location: ../index.php?page-user');
         }
     }
+
+    if(isset($_POST['update']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
+        $id = $_POST['id'];
+        $username = $_POST['username'];
+        $role_id = $_POST['role_id'];
+
+        if($user->update($id, $username, $role_id)){
+            $_SESSION['success'] = 'Pengguna berhasil diperbarui.';
+            header('Location: ../index.php?page-user');
+        }
+    }
 ?>

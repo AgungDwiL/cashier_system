@@ -31,6 +31,15 @@
             return $stmt->execute();
         }
 
+        public function update($id, $username, $role_id){
+            $query = "UPDATE " . $this->table_name . " SET username = :username, role_id = :role_id WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":username", $username);
+            $stmt->bindParam(":role_id", $role_id);
+            $stmt->bindParam(":id", $id);
+            return $stmt->execute();
+        }
+
         public function getUserById($id){
             $query = "SELECT users.*, roles.name as role FROM " . $this->table_name . " LEFT JOIN roles ON users.role_id = roles.id WHERE users.id = :id";
             $stmt = $this->conn->prepare($query);
