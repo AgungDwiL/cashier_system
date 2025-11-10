@@ -53,6 +53,12 @@
             }
             $this->redirectWithMessage("Penjualan gagal ditambahkan.", "../index.php?page=sales" );
         }
+
+        public function delete($sale_id){
+            $this->saleDetail->deleteDetailById($sale_id);
+            $this->sale->destroy($sale_id);
+            $this->redirectWithMessage("Penjualan berhasil dihapus.", "../index.php?page=sales" );
+        }
     }
 
     $saleController = new SaleController();
@@ -62,4 +68,6 @@
         $products = $_POST['products'];
 
         $saleController->store($customer_name, $total_amount, $products);
+    } elseif(isset($_GET['delete'])){
+        $saleController->delete($_GET['delete']);
     }

@@ -41,6 +41,14 @@
             return $stmt->execute();
         }
 
+        public function updateStock($id, $stock){
+            $query = "UPDATE " . $this->table_name . " SET stock = :stock WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":stock", $stock);
+            $stmt->bindParam(":id", $id);
+            return $stmt->execute();
+        }
+
         public function getProductById($id){
             $query = "SELECT * FROM " . $this->table_name . " WHERE products.id = :id";
             $stmt = $this->conn->prepare($query);

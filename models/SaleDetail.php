@@ -27,4 +27,29 @@ class SaleDetail{
         $stmt->bindParam(':subtotal', $subtotal);
         return $stmt->execute();
     }
+
+    public function deleteDetailById($sale_id){
+        $query = 'SELECT product_id, quantity FROM ' . $this->table_name . ' WHERE sale_id = :sale_id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':sale_id', $sale_id);
+        $stmt->execute();
+
+        $sale_details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $productModel = new Product($this->conn);
+        foreach ($sale_details as $detail){
+            $product = $productModel->getProductById($detail['product_id']);
+
+            if($product){
+                $newStock = $product['stock'] + $detail['quantity'];
+                $productModel->updateStock($detail['product_id'], $newStock);
+            }
+        }
+
+        $query = 'DELETE FROM ' . $this->table_name . ' WHERE sale_id = :sale_id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':sale_id', $sale_id);
+        $stmt->execute();
+    }
+    
 }

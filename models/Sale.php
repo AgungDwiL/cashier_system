@@ -29,4 +29,11 @@ class Sale{
     public function getLastInsertId(){
         return $this->conn->lastInsertId();
     }
+
+    public function destroy($sale_id){
+        $query = 'DELETE FROM ' . $this->table_name . ' WHERE id = :sale_id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':sale_id', $sale_id);
+        return $stmt->execute();
+    }
 }
