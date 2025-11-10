@@ -6,20 +6,26 @@
 
   switch($page){
     case 'users':
-      $title = 'Users';
-      $breadcrumb = ["Home" => "index.php", "Users" => "" ];
+      $title = 'Data Pengguna';
+      $breadcrumb = ["Home" => "index.php", "Pengguna" => "" ];
       $content = 'views/users/list.php';
+      break;
+    
+    case 'create-user':
+      $title = 'Tambah Pengguna';
+      $breadcrumb = ["Home" => "index.php", "Users" => "?page=users", "Tambah Pengguna" => "" ];
+      $content = 'views/users/create.php';
       break;
 
     case 'products':
-      $title = 'Products';
-      $breadcrumb = ["Home" => "index.php", "Products" => "" ];
+      $title = 'Data Produk';
+      $breadcrumb = ["Home" => "index.php", "Produk" => "" ];
       $content = 'views/products/list.php';
       break;
 
     case 'roles':
-      $title = 'Roles';
-      $breadcrumb = ["Home" => "index.php", "Roles" => "" ];
+      $title = 'Data Role';
+      $breadcrumb = ["Home" => "index.php", "Role" => "" ];
       $content = 'views/roles.php';
       break;
     

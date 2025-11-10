@@ -21,5 +21,14 @@
             $stnt->execute();
             return $stnt->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function create($username, $password, $role_id){
+            $query = "INSERT INTO " . $this->table_name . " (username, password, role_id) VALUES (:username, :password, :role_id)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":username", $username);
+            $stmt->bindParam(":password", password_hash($password, PASSWORD_BCRYPT));
+            $stmt->bindParam(":role_id", $role_id);
+            return $stmt->execute();
+        }
     }
 ?>
