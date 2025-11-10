@@ -14,13 +14,13 @@
     
     case 'create-user':
       $title = 'Tambah Pengguna';
-      $breadcrumb = ["Home" => "index.php", "Users" => "?page=users", "Tambah Pengguna" => "" ];
+      $breadcrumb = ["Home" => "index.php", "Pengguna" => "?page=users", "Tambah Pengguna" => "" ];
       $content = 'views/users/create.php';
       break;
 
     case 'edit-user':
       $title = 'Edit Pengguna';
-      $breadcrumb = ["Home" => "index.php", "Users" => "?page=users", "Edit Pengguna" => "" ];
+      $breadcrumb = ["Home" => "index.php", "Pengguna" => "?page=users", "Edit Pengguna" => "" ];
       $content = 'views/users/edit.php';
       break;
 
@@ -28,6 +28,18 @@
       $title = 'Data Produk';
       $breadcrumb = ["Home" => "index.php", "Produk" => "" ];
       $content = 'views/products/list.php';
+      break;
+    
+    case 'create-product':
+      $title = 'Tambah Produk';
+      $breadcrumb = ["Home" => "index.php", "Produk" => "?page=products", "Tambah Produk" => "" ];
+      $content = 'views/products/create.php';
+      break;
+
+    case 'edit-product':
+      $title = 'Edit Product';
+      $breadcrumb = ["Home" => "index.php", "Produk" => "?page=products", "Edit Product" => "" ];
+      $content = 'views/products/edit.php';
       break;
 
     case 'roles':

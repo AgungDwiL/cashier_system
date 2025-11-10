@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Data Pengguna</h3>
-                    <a href="?page=create-user" class="btn btn-success">Tambah Penguna</a>
+                    <a href="?page=create-user" class="btn btn-success">Tambah Pengguna</a>
                 </div>  
             </div>
             <!-- /.card-header -->
