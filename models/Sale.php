@@ -36,4 +36,12 @@ class Sale{
         $stmt->bindParam(':sale_id', $sale_id);
         return $stmt->execute();
     }
+
+    public function getSaleById($id){
+        $query = 'SELECT * FROM ' . $this->table_name . ' WHERE id = :id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
