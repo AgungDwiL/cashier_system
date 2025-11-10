@@ -13,7 +13,7 @@
 
         $loggedInUser = $user->login();
         if($loggedInUser){
-            $_SESSION['user'] = $user;
+            $_SESSION['user'] = $loggedInUser;
             $_SESSION['success'] = 'Selamat Anda telah berhasil login';
             header('Location: ../index.php');
         } else{

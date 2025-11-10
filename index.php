@@ -2,7 +2,7 @@
 
 <?php
   session_start();
-
+  require_once 'config/Auth.php';
   $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
   switch($page){
