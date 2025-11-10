@@ -59,6 +59,29 @@
             $this->sale->destroy($sale_id);
             $this->redirectWithMessage("Penjualan berhasil dihapus.", "../index.php?page=sales" );
         }
+
+        function edit($sale_id, $customer_name, $total_amount, $products)
+        {
+            $this->sale->update($sale_id, $customer_name, $total_amount);
+            $this->saleDetail->deleteDetailById($sale_id);
+
+            foreach ($products as $product){
+                $this->saleDetail->create(
+                    $sale_id,
+                    $product['product_id'],
+                    $product['quantity'],
+                    $product['price'],
+                    $product['subtotal'],
+                );
+
+                $p = $this->product->getProductById($product['product_id']);
+                
+                $newStock =  $p['stock'] - $product['quantity'];
+                $this->product->updateStock($p['id'], $newStock);
+            }
+                
+            $this->redirectWithMessage("Penjualan berhasil ditambahkan.", "../index.php?page=sales" );
+        }
     }
 
     $saleController = new SaleController();
@@ -68,6 +91,13 @@
         $products = $_POST['products'];
 
         $saleController->store($customer_name, $total_amount, $products);
+    } elseif($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])){
+        $sale_id = $_POST['sale_id'];
+        $customer_name = $_POST['customer_name'];
+        $total_amount = $_POST['total_amount'];
+        $products = $_POST['products'];
+
+        $saleController->edit($sale_id, $customer_name, $total_amount, $products);
     } elseif(isset($_GET['delete'])){
         $saleController->delete($_GET['delete']);
     }

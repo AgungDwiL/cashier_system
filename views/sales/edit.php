@@ -53,15 +53,29 @@
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <small class="text-muted price-label"> Harga: - | Stok: -</small>
-                                    <input type="hidden" name="products[0][price]" class="hidden_price">
+                                    <?php
+                                        $product_stock = 0;
+                                        foreach ($products as $p){
+                                            if($p['id'] == $detail['product_id']){
+                                                $product_stock = $p['stock'];
+                                                break;
+                                            }
+                                        }
+                                    ?>
+                                    <small class="text-muted"> Harga: <span class="price-label"><?= $detail['price'] ?></span> | Stok: <span class="stock-label"><?= $product_stock ?></span></small>
+                                    <input type="hidden" name="products[<?= $i ?>][price]" class="hidden_price">
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="number" placeholder="Jumlah Penjualan" class="form-control quantity" name="products[0][quantity]" required min="1" value="1">
+                                <div class="col-md-3">
+                                    <input type="number" placeholder="Jumlah Penjualan" class="form-control quantity" name="products[<?= $i ?>][quantity]" required min="1" value="<?= $detail['quantity'] ?>">
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="number" placeholder="Subtotal" class="form-control subtotal" name="products[0][subtotal]" required readonly>
+                                <div class="col-md-3">
+                                    <input type="number" placeholder="Subtotal" class="form-control subtotal" name="products[<?= $i ?>][subtotal]" required readonly value="<?= $detail['subtotal'] ?>">
                                 </div>
+                                <?php if($i > 0 ): ?>
+                                    <div class="col-md-2 d-flex align-items-center">
+                                        <button type="button" class="btn btn-danger remove-product">❌</button>
+                                    </div>
+                                <?php endif ?>
                             </div>
                         <?php endforeach ?>
                     </div>
@@ -69,14 +83,14 @@
                 </div>
                  <div class="mb-3">
                     <label for="total_amount" class="form_label">Total Penjualan</label>
-                    <input type="number" id="total_amount" placeholder="Total Penjualan..." name="total_amount" class="form-control" required readonly>
+                    <input type="number" id="total_amount" placeholder="Total Penjualan..." name="total_amount" class="form-control" required readonly value="<?= $sale_data['total_amount'] ?>">
                 </div>
             </div>
             <!--end::Body-->
             <!--begin::Footer-->
             <div class="card-footer">
                 <div class="d-flex justify-content-end">
-                    <button type="submit" name="create" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="update" class="btn btn-primary">Submit</button>
                 </div>
             </div>
             <!--end::Footer-->
@@ -90,99 +104,93 @@
 <!--end::Row-->
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    function updatePrice(event) {
-        var row = event.target.closest('.row');
-        var subtotalInput = row.querySelector('.subtotal');
-        var quantityInput = row.querySelector('.quantity');
-        var selectedProduct = row.querySelector('.product').selectedOptions[0];
-        var priceLabel = row.querySelector('.price-label');
-        var hiddenPriceInput = row.querySelector('.hidden_price');
+    document.addEventListener("DOMContentLoaded", function() {
+        function updateSubtotal(row) {
+            var product = row.querySelector(".product option:checked");
+            var price = parseFloat(product.getAttribute("data-price")) || 0;
+            var stock = product.getAttribute("data-stock") || "-";
+            var quantity = parseInt(row.querySelector(".quantity").value) || 0;
+            var subtotal = price * quantity;
 
-        var pricePerItem = selectedProduct ? parseFloat(selectedProduct.getAttribute("data-price")) || 0 : 0;
-        var stockAvailable = selectedProduct ? parseInt(selectedProduct.getAttribute("data-stock")) || 0 : 0;
-        var quantity = quantityInput.value ? parseInt(quantityInput.value) : 1;
+            row.querySelector(".subtotal").value = subtotal;
+            row.querySelector(".price-label").textContent = new Intl.NumberFormat("id-ID").format(price);
+            row.querySelector(".stock-label").textContent = stock;
+            row.querySelector(".hidden_price").value = price; // Menyimpan harga dalam input hidden
 
-        priceLabel.textContent = "Harga: Rp" + pricePerItem.toLocaleString("id-ID") + " | Stok: " + stockAvailable;
-        hiddenPriceInput.value = pricePerItem;
-
-        quantityInput.max = stockAvailable;
-        if (quantity > stockAvailable) {
-            quantityInput.value = stockAvailable;
-            quantity = stockAvailable;
+            updateTotal();
         }
 
-        subtotalInput.value = pricePerItem * quantity;
-        updateTotal();
-    }
+        function updateTotal() {
+            var totalAmount = 0;
+            document.querySelectorAll(".subtotal").forEach(function(input) {
+                totalAmount += parseFloat(input.value) || 0;
+            });
+            document.getElementById("total_amount").value = totalAmount;
+        }
 
-    function updateTotal() {
-        var totalAmountInput = document.getElementById("total_amount");
-        var total = 0;
-
-        document.querySelectorAll(".subtotal").forEach(function(subtotalInput) {
-            total += parseFloat(subtotalInput.value) || 0;
+        document.querySelectorAll(".product").forEach(select => {
+            select.addEventListener("change", function() {
+                updateSubtotal(this.closest(".product-item"));
+            });
         });
 
-        totalAmountInput.value = total;
-    }
+        document.querySelectorAll(".quantity").forEach(input => {
+            input.addEventListener("input", function() {
+                updateSubtotal(this.closest(".product-item"));
+            });
+        });
 
-    function addRemoveEventListeners() {
-        document.querySelectorAll(".remove-product").forEach(button => {
-            button.addEventListener("click", function() {
-                this.closest(".row").remove();
+        document.getElementById("add-product").addEventListener("click", function() {
+            var count = document.querySelectorAll("#product-list .product-item").length;
+            var productList = document.getElementById("product-list");
+
+            var newRow = document.createElement("div");
+            newRow.className = "row mb-2 product-item";
+            newRow.innerHTML = `
+                <div class="col-md-4">
+                    <select class="form-control product" name="products[\${count}][product_id]" required>
+                        <option value="">Pilih Produk</option>
+                        <?php foreach ($products as $product) : ?>
+                            <option value="<?= $product['id'] ?>" data-price="<?= $product['price'] ?>" data-stock="<?= $product['stock'] ?>">
+                                <?= $product['name'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <small class="text-muted">Harga: Rp <span class="price-label">0</span> | Stok: <span class="stock-label">-</span></small> 
+                    <input type="hidden" class="hidden_price" name="products[\${count}][price]"> 
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control quantity" name="products[\${count}][quantity]" required min="1" value="1">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control subtotal" name="products[\${count}][subtotal]" required readonly>
+                </div>
+                <div class="col-md-2 d-flex align-items-center">
+                    <button type="button" class="btn btn-danger remove-product">❌</button>
+                </div>
+            `;
+            productList.appendChild(newRow);
+
+            // Tambahkan event listener untuk produk dan quantity yang baru
+            newRow.querySelector(".product").addEventListener("change", function() {
+                updateSubtotal(newRow);
+            });
+
+            newRow.querySelector(".quantity").addEventListener("input", function() {
+                updateSubtotal(newRow);
+            });
+
+            newRow.querySelector(".remove-product").addEventListener("click", function() {
+                newRow.remove();
                 updateTotal();
             });
         });
-    }
 
-    // Tambahkan event listener untuk produk dan quantity
-    document.querySelectorAll(".product").forEach(el => el.addEventListener("change", updatePrice));
-    document.querySelectorAll(".quantity").forEach(el => el.addEventListener("input", updatePrice));
-
-    // Inisialisasi awal
-    document.querySelectorAll(".product").forEach(el => updatePrice({ target: el }));
-
-    // GANTI INI -> pakai add-product, bukan add-button
-    document.getElementById("add-product").addEventListener("click", function() {
-        var productList = document.getElementById("product-list");
-        var count = productList.getElementsByClassName("row").length;
-
-        var newRow = document.createElement("div");
-        newRow.className = "row mb-2";
-        newRow.innerHTML = `
-            <div class="col-md-4">
-                <select class="form-control product" name="products[${count}][product_id]" required>
-                    <option value="">Pilih Produk</option>
-                    <?php foreach ($products as $product) : ?>
-                        <option value="<?= $product['id'] ?>" 
-                                data-price="<?= $product['price'] ?>" 
-                                data-stock="<?= $product['stock'] ?>"
-                                <?= $product['stock'] == 0 ? 'disabled' : '' ?>>
-                            <?= $product['stock'] == 0 ? $product['name'] . ' (Stok Habis)' : $product['name'] ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <small class="text-muted price-label">Harga: - | Stok: -</small>
-                <input type="hidden" class="hidden_price" name="products[${count}][price]"> 
-            </div>
-            <div class="col-md-3">
-                <input type="number" placeholder="Jumlah" class="form-control quantity" name="products[${count}][quantity]" required min="1" value="1">
-            </div>
-            <div class="col-md-3">
-                <input type="text" placeholder="Subtotal" class="form-control subtotal" name="products[${count}][subtotal]" required readonly>
-            </div>
-            <div class="col-md-2 d-flex align-items-center">
-                <button type="button" class="btn btn-danger remove-product">❌</button>
-            </div>
-        `;
-
-        productList.appendChild(newRow);
-        newRow.querySelector(".product").addEventListener("change", updatePrice);
-        newRow.querySelector(".quantity").addEventListener("input", updatePrice);
-        addRemoveEventListeners();
+        document.querySelectorAll(".remove-product").forEach(button => {
+            button.addEventListener("click", function() {
+                this.closest(".product-item").remove();
+                updateTotal();
+            });
+        });
     });
-
-    addRemoveEventListeners();
-});
 </script>

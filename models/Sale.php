@@ -26,6 +26,15 @@ class Sale{
         return $stmt->execute();
     }
 
+    public function update($sale_id, $customer_name, $total_amount){
+        $query = 'UPDATE ' . $this->table_name . ' SET customer_name = :customer_name, total_amount = :total_amount WHERE id = :sale_id';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':sale_id', $sale_id);
+        $stmt->bindParam(':customer_name', $customer_name);
+        $stmt->bindParam(':total_amount', $total_amount);
+        return $stmt->execute();
+    }
+
     public function getLastInsertId(){
         return $this->conn->lastInsertId();
     }
