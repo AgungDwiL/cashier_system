@@ -29,25 +29,25 @@
         data-accordion="false"
     >
         <li class="nav-item">
-        <a href="./generate/theme.html" class="nav-link">
+        <a href="?page=dashboard" class="nav-link">
             <i class="nav-icon bi bi-speedometer"></i>
             <p>Dashboard</p>
         </a>
         </li>
         <li class="nav-item">
-        <a href="./generate/theme.html" class="nav-link">
+        <a href="?page=products" class="nav-link">
             <i class="nav-icon bi bi-box"></i>
             <p>Produk</p>
         </a>
         </li>
         <li class="nav-item">
-        <a href="./generate/theme.html" class="nav-link">
+        <a href="?page=users" class="nav-link">
             <i class="nav-icon bi bi-people"></i>
             <p>Pengguna</p>
         </a>
         </li>
         <li class="nav-item">
-        <a href="./generate/theme.html" class="nav-link">
+        <a href="?page=roles" class="nav-link">
             <i class="nav-icon bi bi-gear"></i>
             <p>Role</p>
         </a>
