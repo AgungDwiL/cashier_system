@@ -41,6 +41,7 @@
                             <td><?= $s['total_amount'] ?></td>
                             <td><?= date("d M Y", strtotime($s['sales_date'])) ?></td>
                             <td>
+                                <a class="btn btn-warning" href="?page=detail-sale&id=<?= $s['id'] ?>">Detail</a>
                                 <a class="btn btn-info" href="?page=edit-sale&id=<?= $s['id'] ?>">Edit</a>
                                 <a class="btn btn-danger" href="controllers/SaleController.php?delete=<?= $s['id'] ?>" onclick="return confirm('Apakah anda yakin ingin menghapus penjualan ini?')">Delete</a>
                             </td>

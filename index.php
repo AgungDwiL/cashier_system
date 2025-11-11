@@ -59,6 +59,12 @@
       $breadcrumb = ["Home" => "index.php", "Penjualan" => "?page=sales", "Edit Penjualan" => "" ];
       $content = 'views/sales/edit.php';
       break;
+    
+    case 'detail-sale':
+      $title = 'Detail Penjualan';
+      $breadcrumb = ["Home" => "index.php", "Penjualan" => "?page=sales", "Detail Penjualan" => "" ];
+      $content = 'views/sales/detail.php';
+      break;
 
     case 'roles':
       $title = 'Data Role';
